@@ -1,30 +1,48 @@
+// FILE: src/app/page.tsx
 "use client";
 
-import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { useState } from "react";
+import Header from "@/components/landing/Header";
+import Hero from "@/components/landing/Hero";
+import HowItWorks from "@/components/landing/HowItWorks";
+import Footer from "@/components/landing/Footer";
+import GetStartedModal from "@/components/landing/GetStartedModal";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-zinc-50 to-white px-6 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="flex flex-col items-center gap-4"
-      >
-        <div className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-1.5 text-sm text-zinc-500 shadow-sm">
-          <Sparkles className="h-4 w-4 text-zinc-400" />
-          business.zadoc.online
-        </div>
+    <>
+      <Header onGetStarted={() => setIsModalOpen(true)} />
 
-        <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
-          Hello, World 👋
-        </h1>
+      <main className="flex-1">
+        <Hero onGetStarted={() => setIsModalOpen(true)} />
+        <HowItWorks />
 
-        <p className="max-w-md text-lg text-zinc-600">
-          Welcome to the business.zadoc.online site of the company.
-        </p>
-      </motion.div>
-    </div>
+        <section className="border-t border-line bg-brand-ink">
+          <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-6 py-16 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-20">
+            <div>
+              <h2 className="text-2xl font-medium tracking-tight text-paper sm:text-3xl">
+                Ready for your business or school to be online?
+              </h2>
+              <p className="mt-2 max-w-md text-paper/70">
+                Message us your details and we&apos;ll take it from there.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="flex-none rounded-full bg-paper px-6 py-3.5 text-base font-medium text-brand-ink transition-colors hover:bg-paper-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-paper focus-visible:ring-offset-2 focus-visible:ring-offset-brand-ink"
+            >
+              Get Started
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+
+      <GetStartedModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 }
